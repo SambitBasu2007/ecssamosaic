@@ -27,7 +27,7 @@ export default function EventDetails() {
 
         <dl className="dossier__grid reveal">
           {DOSSIER_ROWS.map((row) => (
-            <div className="stat dossier__row" key={row.label}>
+            <div className="stat dossier__row" key={row.id}>
               <dt className="label">{row.label}</dt>
               <dd className="stat__value">{row.value}</dd>
             </div>

@@ -59,7 +59,8 @@ export const EVENT = {
     location: "St. Francis Institute of Technology, 6th floor, room 618",
     prizePool: "₹idk Cash Prize",
     teamFormat: "teams of 3-4",
-    entryFee: "150-200 per team",
+    entryFee: "₹150 for teams of 3",
+    entryFeee: "₹200 for teams of 4",
   },
 
   /* --- Register --------------------------------------------------------- */
@@ -86,12 +87,13 @@ export const EVENT = {
 } as const;
 
 /** Label/value rows for the dossier grid, in presentation order. */
-export const DOSSIER_ROWS: { label: string; value: string }[] = [
-  { label: "Event date", value: EVENT.dossier.date },
-  { label: "Event location", value: EVENT.dossier.location },
-  { label: "Prize pool", value: EVENT.dossier.prizePool },
-  { label: "Team format", value: EVENT.dossier.teamFormat },
-  { label: "Entry fee", value: EVENT.dossier.entryFee },
+export const DOSSIER_ROWS: { id: string; label: string; value: string }[] = [
+  { id: "event-date", label: "Event date", value: EVENT.dossier.date },
+  { id: "event-location", label: "Event location", value: EVENT.dossier.location },
+  { id: "prize-pool", label: "Prize pool", value: EVENT.dossier.prizePool },
+  { id: "tea m-format", label: "Team format", value: EVENT.dossier.teamFormat },
+  { id: "entry-fee-team-of-3", label: "Entry fee", value: EVENT.dossier.entryFee },
+  { id: "entry-fee-team-of-4", label: "Entry fee", value: EVENT.dossier.entryFeee },
 ];
 
 /** The facts restated above the register CTA. */
