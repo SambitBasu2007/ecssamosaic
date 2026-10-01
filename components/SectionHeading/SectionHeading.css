@@ -1,10 +1,18 @@
-/* Section heading block: kicker, title, optional lead. */
+/* Section heading block: hairline, title, optional lead. */
 
 .section-heading {
   display: flex;
   flex-direction: column;
   gap: clamp(0.85rem, 2vh, 1.4rem);
   margin-bottom: clamp(2.5rem, 6vh, 4rem);
+}
+
+/* The rule the eyebrow used to carry, kept above the title so headings keep
+   their HUD framing. */
+.section-heading::before {
+  content: "";
+  height: 1px;
+  background: var(--hairline);
 }
 
 .section-heading__title {

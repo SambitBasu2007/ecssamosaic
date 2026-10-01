@@ -251,8 +251,9 @@
  *   .reveal          fade + a short slide in from the left, for prose blocks
  *   .reveal--mask    clip-path sweep from the left — headings
  *   .reveal--print   stepped sweep from the left, one child behind the next —
- *                    lists that write themselves in (dossier rows, transmission
- *                    log, entry fees)
+ *                    lists that write themselves in (dossier rows, entry fees;
+ *                    the transmission log now prints on Our Theme's pinned
+ *                    timeline instead — see OurTheme.css)
  */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {

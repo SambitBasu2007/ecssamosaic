@@ -40,7 +40,7 @@ components/
     PreloaderGate.tsx           pre-paint script that skips the intro for
                   reduced-motion visitors
   SectionBackdrop/              shared scenic background + overlay
-  SectionHeading/               shared numbered heading block
+  SectionHeading/               shared heading block (hairline + title)
   Hero/
     Hero.tsx / .css             section shell + the debris playfield
     BackgroundLayer/            hero background image
@@ -50,12 +50,12 @@ components/
       debris.config.ts          rock list: size, start, direction, speed, spin
       useDebrisPhysics.ts       the bounce engine
     HeroRegister/               [ REGISTER ] HUD control → #register
-    ScrollCue/                  bottom-centre pulse → #about
-  About/                        About Mosaic          (#about)      01
+    ScrollCue/                  bottom-centre pulse → #theme
+  OurTheme/                     Recovered Transmission (#theme) — pinned typed scenes
+  About/                        About Mosaic          (#about)
   Ignition/                     (not rendered — kept for reference, see below)
-  OurTheme/                     Our Theme             (#theme)      02
-  EventDetails/                 Mission Dossier       (#details)    03
-  Register/                     Register              (#register)   04
+  EventDetails/                 Mission Dossier       (#details)
+  Register/                     Register              (#register)
   Footer/                       contact + socials     (#contact)
   Cursor/                       HUD reticle cursor
   SmoothScroll/                 Lenis layer + snap assist
@@ -105,16 +105,18 @@ section stylesheet reads those variables. So the story beat — calm briefing, t
 "the crisis has begun" — is one class on the section:
 
 ```
-Hero            pre-crisis
-About Mosaic    pre-crisis        .section           01
-Our Theme       post-crisis       .section--crisis    02
-Mission Dossier post-crisis       .section--crisis    03
-Register        post-crisis       .section--crisis    04
-Footer          post-crisis       .section--crisis
+Hero                    pre-crisis
+Recovered Transmission  post-crisis      .section--crisis
+About Mosaic            pre-crisis       .section
+Mission Dossier         post-crisis      .section--crisis
+Register                post-crisis      .section--crisis
+Footer                  post-crisis      .section--crisis
 ```
 
 The Ignition Sequence used to turn the palette crimson mid-pin. It is no longer
-rendered, so the crisis palette now starts at Our Theme (02).
+rendered, so the crisis palette now starts at the Recovered Transmission; from
+there the page alternates crisis → calm → crisis, and each boundary keeps its
+dissolve band.
 
 ### Typography
 
@@ -160,10 +162,54 @@ entrance.
   which reads like a printer head. Gets its stagger from one custom property per
   child (`--print-step`, set by `:nth-child`), which shifts each child's whole
   `animation-range`, so the row above is always finished before the row below
-  starts. Used by the transmission log, the dossier rows and the entry-fee facts.
+  starts. Used by the dossier rows and the entry-fee facts. (The transmission
+  log's entries are set far larger, one pinned scene per entry — see below.)
 
-Deliberately *not* a character typewriter: that needs `white-space: nowrap`, which
-would break the wrapping rules the mobile layout depends on.
+The reveal flavours above are block-level sweeps; the transmission log below
+goes further and types per character — but its characters are inline spans, so
+the wrapping rules the mobile layout depends on are untouched.
+
+#### The transmission scenes (Our Theme)
+
+The log is the show. After the heading and metadata load in like any other
+section, each of the four log entries becomes a scroll track ~1.5× the
+viewport carrying a sticky, viewport-tall stage — a `LOG 0n` stamp in warm
+cream, haloed in ember (`--ember`) so it reads against the crimson backdrop —
+above a huge line. The line types in character by character as the track
+enters; the stage then pins centred while you keep scrolling; and near the end
+of its track the scene scales back, ghosts to a faint echo, and fades in place
+at centre — a `translate` compensation cancels the track's push-up, so the
+scene never scrolls away — while the next track's stage slides up over it — a
+depth handoff (`ot-recede`),
+never a plain scroll-away. Later stages paint above earlier ones (both are
+positioned), so the incoming scene genuinely covers the receding one, and the
+recede is opacity + scale only, so it stays on the compositor.
+
+Typing runs in reading order, never as a wipe. Every character is its own
+span; all of them share their track's named `view()` timeline
+(`view-timeline-name: --ot-beat` on `.our-theme__entry` — deliberately the
+track and not the sticky stage, since a pinned element's own view progress
+freezes; children resolve the name to the nearest ancestor track), and each
+character's `animation-range` slice is one character wide, offset by
+its index (`--ot-i`) by one step (`--ot-step`, computed from `TYPING_SPAN` in
+`OurTheme.tsx`) — so a wrapped line types out line by line like a terminal,
+with the full block occupying layout from the start. Characters pop in with
+`steps(1, end)` rather than fading, the way a terminal prints. The stamp fades
+in just before typing starts; the block caret fades in as the last character
+lands, and its dot then blinks on the wall clock (`ot-caret-blink`), so the
+prompt keeps pulsing even when the scroll rests. The line's text is also
+rendered once, visually hidden, for assistive tech.
+
+Tunables sit in `OurTheme.css` and `OurTheme.tsx`: the track length
+(`min-height: 150svh` on `.our-theme__entry`, which sets the 50svh stick
+window), the recede window (`animation-range: cover 50% cover 66%` on
+`.our-theme__stage`, shaped by `ot-recede`), the type scale, the typing
+window (`--ot-type-start: 55%` — late, so the typing happens on-screen while
+the scene rises into place — plus `TYPING_SPAN`, shared with the CSS as
+`--ot-type-span`) and the per-character pop (`steps(1, end)` on
+`.our-theme__char`). Fallbacks are the usual ones — without
+`animation-timeline`, and under `prefers-reduced-motion`, the stages are
+plain full-height blocks in normal flow and every entry renders fully typed.
 
 #### Crisis signal noise
 
@@ -193,9 +239,11 @@ painting (see below).
 
 ### Full-screen sections and sticky backdrops
 
-Every regular content section (About Mosaic, Our Theme, Mission Dossier, Register)
-is at least one viewport tall and vertically centres its content, so the page
-reads as a run of full-screen scenes. The Hero keeps its own shell and the Footer
+Every regular content section (Recovered Transmission, About Mosaic, Mission
+Dossier, Register) is at least one viewport tall and vertically centres its
+content, so the page reads as a run of full-screen scenes. The transmission
+runs longer than one screen on purpose — its four log scenes pin, recede and
+hand off across tracks ~1.5× the viewport each — and its closing beat keeps the shared rule as a screen of its own. The Hero keeps its own shell and the Footer
 keeps its content-driven height; `styles/sections.css` scopes both rules with
 `.section:not(.site-footer)`. `min-height` — never a fixed height — so a section
 still grows when its copy needs the room.
@@ -330,10 +378,10 @@ different `object-position` values and overlays. Drop more images into
 ## The Ignition Sequence (not rendered)
 
 The component and its assets still live in the repo, but the section was removed
-from `app/page.tsx`: the page is now Hero → About Mosaic (01) → Our Theme (02) →
-Mission Dossier (03) → Register (04) → Footer. Nothing imports `components/Ignition`,
-so it is not part of the build output; restoring it means one import and one
-element in `app/page.tsx`, plus renumbering the sections after it.
+from `app/page.tsx`: the page is now Hero → Recovered Transmission → About
+Mosaic → Mission Dossier → Register → Footer. Nothing imports
+`components/Ignition`, so it is not part of the build output; restoring it
+means one import and one element in `app/page.tsx`.
 
 If it is ever brought back, this is how it behaves:
 
@@ -355,10 +403,10 @@ If it is ever brought back, this is how it behaves:
 
 ## Deliberately not included
 
-- **GSAP ScrollTrigger / ogl / dotlottie.** Still unused. Section reveals and
-  the pinned Ignition scene need no scroll engine: native `position: sticky`
-  plus a CSS scroll-driven timeline covers both, so those dependencies have
-  never earned their weight. (They are still in `package.json` — either spend
+- **GSAP ScrollTrigger / ogl / dotlottie.** Still unused. Section reveals, the
+  transmission beats and the pinned Ignition scene need no scroll engine:
+  native `position: sticky` plus CSS scroll-driven timelines cover all of them,
+  so those dependencies have never earned their weight. (They are still in `package.json` — either spend
   them or drop them.)
 - **Phosphor Icons.** The footer needs three marks, so they are inline SVG in
   `components/Footer/Icons.tsx` — no dependency, and they render in a

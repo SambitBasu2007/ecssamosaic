@@ -17,12 +17,7 @@ export default function EventDetails() {
       <SectionBackdrop src={ASSETS.scenery.dossier} focal="62% 58%" />
       <div className="section__inner">
         <div className="reveal reveal--mask">
-          <SectionHeading
-            id="details-title"
-            index="03"
-            eyebrow="Event details"
-            title="Mission Dossier"
-          />
+          <SectionHeading id="details-title" title=" Mosaic Mission Dossier" />
         </div>
 
         {/* The dossier prints row by row rather than arriving as one panel —

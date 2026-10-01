@@ -1,5 +1,17 @@
 /* Footer — closing line, credits, socials. */
 
+.site-footer {
+  --overlay: linear-gradient(
+    180deg,
+    rgba(60, 8, 14, 0.62) 0%,
+    rgba(60, 8, 14, 0.34) 28%,
+    rgba(60, 8, 14, 0.08) 50%,
+    rgba(60, 8, 14, 0) 68%,
+    rgba(60, 8, 14, 0) 100%
+  );
+  padding-bottom: clamp(12rem, 28vh, 20rem);
+}
+
 .site-footer__inner {
   display: flex;
   flex-direction: column;

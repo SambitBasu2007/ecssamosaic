@@ -9,7 +9,7 @@ import "./ScrollCue.css";
  */
 export default function ScrollCue() {
   return (
-    <a className="scroll-cue" href="#about" aria-label="Scroll to About Mosaic">
+    <a className="scroll-cue" href="#theme" aria-label="Scroll to the recovered transmission">
       <span className="scroll-cue__label">Scroll</span>
       <span className="scroll-cue__bar" aria-hidden="true">
         <span className="scroll-cue__tracer" />

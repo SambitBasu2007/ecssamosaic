@@ -17,12 +17,7 @@ export default function Register() {
       <SectionBackdrop src={ASSETS.scenery.giant} focal="50% 62%" />
       <div className="section__inner register__inner">
         <div className="reveal reveal--mask">
-          <SectionHeading
-            id="register-title"
-            index="04"
-            eyebrow="Register"
-            title="REGISTER NOW"
-          />
+          <SectionHeading id="register-title" title="REGISTER NOW" />
         </div>
 
         <dl className="register__facts">

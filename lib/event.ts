@@ -28,26 +28,32 @@ export const EVENT = {
   },
 
   /* --- Our Theme -------------------------------------------------------- */
+  /* The section's single header is `lead` ("RECOVERED TRANSMISSION"); the log
+     below it is the payload. */
   theme: {
     lead: "RECOVERED TRANSMISSION",
     source: "PETROVA-7",
     status: "PARTIAL",
     log: [
       {
-        stamp: "T+00:04",
+        stamp: "LOG 01",
         line: "Orbit nominal. Telemetry stable.",
+        detail: "The last clean reading arrived before contact was lost.",
       },
       {
-        stamp: "T+00:31",
+        stamp: "LOG 02",
         line: "Uncommanded orbital deviation detected.",
+        detail: "The deviation occurred without a corresponding thrust command.",
       },
       {
-        stamp: "T+01:12",
+        stamp: "LOG 03",
         line: "Atmospheric readings exceeding known limits.",
+        detail: "The atmosphere is outside every known operating threshold.",
       },
       {
-        stamp: "T+02:47",
+        stamp: "LOG 04",
         line: "Visual confirmation received.",
+        detail: "The visual feed confirms an object inside the storm.",
       },
     ],
     closing:

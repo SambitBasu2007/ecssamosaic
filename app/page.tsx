@@ -16,8 +16,8 @@ export default function HomePage() {
     <>
       <main id="content">
         <Hero />
-        <About />
         <OurTheme />
+        <About />
         <EventDetails />
         <Register />
       </main>

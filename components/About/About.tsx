@@ -17,7 +17,7 @@ export default function About() {
       <SectionBackdrop src={ASSETS.scenery.planet} focal="50% 45%" />
       <div className="section__inner about__inner">
         <div className="reveal reveal--mask">
-          <SectionHeading id="about-title" index="01" eyebrow="Briefing" title="About Mosaic" />
+          <SectionHeading id="about-title" title="About Mosaic" />
         </div>
 
         <div className="about__copy reveal">
