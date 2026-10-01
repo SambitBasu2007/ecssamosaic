@@ -23,3 +23,27 @@
   inset: 0;
   background: var(--overlay);
 }
+
+/* Inside a regular content section the backdrop is not an absolute fill but a
+   section-local sticky stage: it pins to the top of the viewport while its own
+   section is on screen — however tall the content makes that section — and the
+   next section's backdrop takes over exactly at the section boundary. No
+   JavaScript, no `background-attachment: fixed`.
+
+   The negative block margins lift the stage out of the section's flow and give
+   it back the space it would otherwise occupy (a section's content padding
+   stays exactly where it was), while the negative inline margins cancel the
+   section gutter so the image still bleeds edge to edge. The Footer and any
+   other excluded section keeps the plain absolute fill above. */
+.section:not(.site-footer) > .backdrop {
+  position: sticky;
+  inset: auto;
+  top: 0;
+  z-index: 0;
+  width: calc(100% + 2 * var(--gutter));
+  height: 100svh;
+  margin-top: calc(var(--section-py) * -1);
+  margin-bottom: calc(-100svh + var(--section-py));
+  margin-inline: calc(var(--gutter) * -1);
+  overflow: hidden;
+}

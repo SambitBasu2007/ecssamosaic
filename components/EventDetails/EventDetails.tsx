@@ -16,18 +16,20 @@ export default function EventDetails() {
     <section className="section section--crisis dossier" id="details" aria-labelledby="details-title">
       <SectionBackdrop src={ASSETS.scenery.dossier} focal="62% 58%" />
       <div className="section__inner">
-        <div className="reveal">
+        <div className="reveal reveal--mask">
           <SectionHeading
             id="details-title"
-            index="04"
+            index="03"
             eyebrow="Event details"
             title="Mission Dossier"
           />
         </div>
 
-        <dl className="dossier__grid reveal">
+        {/* The dossier prints row by row rather than arriving as one panel —
+            see `.reveal--print` in styles/sections.css. */}
+        <dl className="dossier__grid">
           {DOSSIER_ROWS.map((row) => (
-            <div className="stat dossier__row" key={row.id}>
+            <div className="stat dossier__row reveal reveal--print" key={row.id}>
               <dt className="label">{row.label}</dt>
               <dd className="stat__value">{row.value}</dd>
             </div>

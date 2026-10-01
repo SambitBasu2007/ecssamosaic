@@ -14,7 +14,7 @@
   --bg-sunken: #030408;
 
   /* --- Two-phase palette ------------------------------------------------ */
-  /* Post-crisis primary, from the Ignition Sequence onward. */
+  /* Post-crisis primary, from Our Theme onward. */
   --crimson: #c8203c;
   /* Constant secondary, readable against both the blue-lit and red-lit halves. */
   --ember: #d97b3f;
@@ -53,6 +53,15 @@
   --section-py: clamp(5rem, 12vh, 9rem);
   --gutter: clamp(1.25rem, 5vw, 3.5rem);
   --touch-target: 2.75rem; /* 44px minimum for anything tappable */
+
+  /* --- Motion ----------------------------------------------------------- */
+  /* Every duration and curve in the project comes from here, so hover states,
+     entrances and the cursor reticle all move at the same tempo. */
+  --dur-quick: 180ms; /* hovers, colour and border shifts */
+  --dur-base: 420ms; /* entrances, reticle state changes */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --stagger: 60ms; /* the beat between sibling entrances */
 }
 
 .section--crisis {
@@ -83,7 +92,12 @@ html {
 
 body {
   min-height: 100vh;
+  /* `clip` keeps the same horizontal protection as `hidden` without making the
+     body a scroll container, which is what would otherwise break the sticky
+     section backdrops (they must pin against the viewport, not the body). The
+     first declaration stays as the fallback for engines without `clip`. */
   overflow-x: hidden;
+  overflow-x: clip;
   background-color: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
@@ -135,6 +149,36 @@ strong {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+}
+
+/* --- Browser chrome ------------------------------------------------------- */
+
+/* Selected text uses the event's crimson instead of the system blue. White on
+   #c8203c is the same pairing as `.btn--primary`, so contrast is already proven. */
+::selection {
+  background-color: var(--crimson);
+  color: #fff;
+}
+
+/* The page scrollbar is part of the HUD: crimson thumb, sunken track. The
+   standard property covers Firefox and current Chromium; the `-webkit-`
+   pseudo-elements cover older WebKit/Blink, which ignore it. Their width is left
+   alone so the scrollbar keeps its platform thickness (and the layout its
+   measured gutters). */
+html {
+  scrollbar-color: var(--crimson) var(--bg-sunken);
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--bg-sunken);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--crimson);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #e0264a;
 }
 
 .visually-hidden {

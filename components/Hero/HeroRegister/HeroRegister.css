@@ -14,11 +14,26 @@
   max-width: calc(100vw - 2rem);
   color: var(--signal);
   transform: translateX(-50%);
+
+  /* Entrance out of the intro film. Only the two properties the entrance needs
+     carry a delay, so hover feedback stays instant. Hidden state is scoped to
+     `[data-preloader="playing"]`, so with no JS (or with reduced motion, which
+     the gate marks as "skip") the control is simply visible. */
+  --i: 2;
+  transition: color var(--dur-quick) var(--ease-out-quint),
+    opacity var(--dur-base) var(--ease-out-quint),
+    transform var(--dur-base) var(--ease-out-quint);
+  transition-delay: 0s, calc(var(--stagger) * var(--i)), calc(var(--stagger) * var(--i));
+}
+
+html[data-preloader="playing"] .hero-register {
+  opacity: 0;
+  transform: translate(-50%, -0.75rem);
 }
 
 .hero-register__bracket {
   color: var(--text-muted);
-  transition: color 180ms ease;
+  transition: color var(--dur-quick) var(--ease-out-quint);
 }
 
 .hero-register:hover .hero-register__bracket,

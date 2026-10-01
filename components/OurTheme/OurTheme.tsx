@@ -17,19 +17,25 @@ export default function OurTheme() {
     <section className="section section--crisis our-theme" id="theme" aria-labelledby="theme-title">
       <SectionBackdrop src={ASSETS.scenery.giant} focal="50% 38%" />
       <div className="section__inner our-theme__inner">
-        <div className="reveal">
+        <div className="reveal reveal--mask">
           <SectionHeading
             id="theme-title"
-            index="03"
+            index="02"
             eyebrow="Transmission"
             title="Our Theme"
             lead={EVENT.theme.lead}
           />
+          <div className="our-theme__metadata" aria-label="Transmission metadata">
+            <span className="label">Source: {EVENT.theme.source}</span>
+            <span className="label">Status: {EVENT.theme.status}</span>
+          </div>
         </div>
 
-        <ol className="our-theme__log reveal">
+        {/* Each entry prints itself in, one behind the next — see
+            `.reveal--print` in styles/sections.css. */}
+        <ol className="our-theme__log">
           {EVENT.theme.log.map((entry) => (
-            <li className="our-theme__entry" key={entry.stamp}>
+            <li className="our-theme__entry reveal reveal--print" key={entry.stamp}>
               <span className="label our-theme__stamp">{entry.stamp}</span>
               <p className="our-theme__line">{entry.line}</p>
             </li>

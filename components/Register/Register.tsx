@@ -16,23 +16,25 @@ export default function Register() {
     <section className="section section--crisis register" id="register" aria-labelledby="register-title">
       <SectionBackdrop src={ASSETS.scenery.giant} focal="50% 62%" />
       <div className="section__inner register__inner">
-        <div className="reveal">
+        <div className="reveal reveal--mask">
           <SectionHeading
             id="register-title"
-            index="05"
+            index="04"
             eyebrow="Register"
             title="REGISTER NOW"
           />
         </div>
 
-        <dl className="register__facts reveal">
+        <dl className="register__facts">
           {REGISTER_FACTS.map((fact) => (
-            <div className="stat register__fact" key={fact.label}>
+            <div className="stat register__fact reveal reveal--print" key={fact.label}>
               <dt className="label">{fact.label}</dt>
               <dd className="stat__value">{fact.value}</dd>
             </div>
           ))}
         </dl>
+
+        <p className="lead register__closing reveal">{EVENT.register.closing}</p>
 
         <div className="register__cta reveal">
           <a className="btn btn--primary" href={EVENT.register.url}>

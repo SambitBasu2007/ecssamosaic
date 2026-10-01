@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
 
+import Cursor from "@/components/Cursor/Cursor";
 import Preloader from "@/components/Preloader/Preloader";
 import PreloaderGate from "@/components/Preloader/PreloaderGate";
+import SmoothScroll from "@/components/SmoothScroll/SmoothScroll";
 
 import "@/styles/fonts.css";
 import "./globals.css";
@@ -31,6 +33,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Full-screen intro film. Server-rendered so it covers the hero from
             the first frame while the hero loads normally underneath. */}
         <Preloader />
+        {/* Both are progressive enhancements that render nothing and opt
+            themselves out for reduced motion, touch, or a stalled frame
+            pipeline. */}
+        <SmoothScroll />
+        <Cursor />
         {children}
       </body>
     </html>

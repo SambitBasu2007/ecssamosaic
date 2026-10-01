@@ -21,6 +21,10 @@
   border-bottom: 1px solid var(--hairline);
 }
 
+.register__closing {
+  max-width: 42rem;
+}
+
 /* The anchor section earns a bigger title than the rest of the page. */
 .register .section-heading__title {
   font-size: clamp(2.9rem, 9.5vw, 6.4rem);

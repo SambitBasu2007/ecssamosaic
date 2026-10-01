@@ -11,7 +11,7 @@ export const ASSETS = {
     background: "/assets/herobackground.jpeg",
   },
   /**
-   * The Ignition Sequence scroll scene (section 02): the planet drifts down
+   * The Ignition Sequence scroll scene (not rendered): the planet drifts down
    * from above while the astronaut rises from below. Both are transparent PNGs
    * rendered at their intrinsic aspect ratio — never stretched.
    */

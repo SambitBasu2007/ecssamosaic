@@ -25,27 +25,47 @@
   gap: 0.6rem;
 }
 
-.site-footer__value {
+.site-footer__value,
+.site-footer__links {
   font-size: clamp(1.06rem, 1.95vw, 1.2rem);
   line-height: 1.55;
   color: var(--text);
   overflow-wrap: anywhere;
 }
 
-.site-footer__value a {
-  border-bottom: 1px solid transparent;
-  transition: border-color 180ms ease, color 180ms ease;
+/* Contact links: one per line, each with its own glyph. */
+.site-footer__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
-.site-footer__value a:hover,
-.site-footer__value a:focus-visible {
+.site-footer__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  width: fit-content;
+  max-width: 100%;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur-quick) var(--ease-out-quint),
+    color var(--dur-quick) var(--ease-out-quint);
+}
+
+.site-footer__link svg {
+  flex: none;
+  color: var(--text-muted);
+  transition: color var(--dur-quick) var(--ease-out-quint);
+}
+
+.site-footer__link:hover,
+.site-footer__link:focus-visible {
   border-bottom-color: var(--accent);
   color: var(--accent);
 }
 
-.site-footer__sep {
-  margin-inline: 0.45em;
-  color: var(--text-muted);
+.site-footer__link:hover svg,
+.site-footer__link:focus-visible svg {
+  color: var(--accent);
 }
 
 .site-footer__socials {
@@ -63,7 +83,9 @@
   border: 1px solid var(--hairline);
   border-radius: 2px;
   color: var(--text-muted);
-  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
+  transition: color var(--dur-quick) var(--ease-out-quint),
+    border-color var(--dur-quick) var(--ease-out-quint),
+    background-color var(--dur-quick) var(--ease-out-quint);
 }
 
 .site-footer__social:hover,

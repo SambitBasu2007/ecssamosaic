@@ -86,13 +86,23 @@ html[data-preloader="skip"] .preloader {
  * screen taller than it is wide is the case that needs the turn, and a landscape
  * screen already fits.
  */
+/*
+ * Frame the film the same way in both orientations: `cover`, never `contain`.
+ * The box has the swapped viewport dimensions, so once it is rotated back it is
+ * exactly the screen — and `cover` inside it fills that screen edge to edge,
+ * cropping only the small mismatch between the film's aspect ratio and the
+ * screen's (about 9% of the film's height on a 390x844 phone, centred).
+ *
+ * `contain` would instead fit the whole film inside the box, which on a portrait
+ * screen shows up as letterbox bars at the top and bottom.
+ */
 @media (max-aspect-ratio: 1 / 1) {
   .preloader__video {
     width: 100vh;
     height: 100vw;
     width: 100dvh;
     height: 100dvw;
-    object-fit: contain;
+    object-fit: cover;
     transform: translate(-50%, -50%) rotate(90deg);
   }
 }
@@ -114,8 +124,9 @@ html[data-preloader="skip"] .preloader {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: color 200ms ease, border-color 200ms ease, background-color 200ms ease,
-    opacity var(--intro-fade) ease;
+  transition: color var(--dur-quick) var(--ease-out-quint),
+    border-color var(--dur-quick) var(--ease-out-quint),
+    background-color var(--dur-quick) var(--ease-out-quint), opacity var(--intro-fade) ease;
 }
 
 .preloader__skip:hover,

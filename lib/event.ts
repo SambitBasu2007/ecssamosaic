@@ -11,63 +11,66 @@ export const EVENT = {
 
   /* --- About Mosaic ----------------------------------------------------- */
   about: {
-    lead:
-      "MOSAIC is the  technical fest of St. Francis Institute of Technology – a gathering of engineers, designers and problem-solvers who would rather build the answer than wait for one.",
+    lead: "MOSAIC 2026 is where technology meets the unknown.",
     body: [
-      "ECSSA is the student technical society behind it: the committee that plans, funds and runs the event end to end, every edition. MOSAIC is where that year of work is put in front of an audience.",
-      "Each edition is built around a single theme, and everything — the brief, the stages, the judging — is staged inside it. This year's theme is Petrova Crisis.",
+      "Built by ECSSA, Petrova Crisis is a high-pressure technical experience designed for teams that can think fast, adapt faster, and keep moving when the system starts breaking.",
+      "This isn't just another technical event. Something has gone wrong. And your team has been called in.",
     ],
     presentedBy: "ECSSA",
     organizedBy: "Mosaic 2026 · St. Francis Institute of Technology",
   },
 
-  /* --- Ignition Sequence (section 02) ----------------------------------- */
+  /* --- Ignition Sequence ------------------------------------------------ */
+  /* Kept for the (currently unrendered) Ignition component; the section was
+     removed from the page, so nothing on the site reads this right now. */
   ignition: {
     marker: "Ignition",
   },
 
   /* --- Our Theme -------------------------------------------------------- */
   theme: {
-    lead:
-      "Recovered from survey platform PETROVA-7 — the last complete log before contact was lost.",
+    lead: "RECOVERED TRANSMISSION",
+    source: "PETROVA-7",
+    status: "PARTIAL",
     log: [
       {
         stamp: "T+00:04",
-        line: "Orbit nominal. Eleven cycles of clean telemetry. Nothing out here but storm bands and silence.",
+        line: "Orbit nominal. Telemetry stable.",
       },
       {
         stamp: "T+00:31",
-        line: "Platform has decayed 4.2° with no thrust command issued. Nothing on board is doing this. Something is pulling.",
+        line: "Uncommanded orbital deviation detected.",
       },
       {
         stamp: "T+01:12",
-        line: "The bands are moving against the wind. Ammonia readings are climbing off the instrument ceiling.",
+        line: "Atmospheric readings exceeding known limits.",
       },
       {
         stamp: "T+02:47",
-        line: "It is inside the storm. It is not weather.",
+        line: "Visual confirmation received.",
       },
     ],
     closing:
-      "Petrova is a crisis now — a planet mid-collapse with everything humanity has left riding on the readouts. Every team that enters the simulation is another attempt at the same answer.",
+      "This is not a storm. It is not a malfunction. And it is not stopping. The PETROVA-7 transmission ends here. What happened next remains classified.",
     handoff: "The crisis has begun.",
   },
 
   /* --- Mission Dossier -------------------------------------------------- */
   dossier: {
-    date: "16-17 October 2026",
-    location: "St. Francis Institute of Technology, 6th floor, room 618",
-    prizePool: "₹idk Cash Prize",
-    teamFormat: "teams of 3-4",
-    entryFee: "₹150 for teams of 3",
-    entryFeee: "₹200 for teams of 4",
+    date: "16–17 OCTOBER 2026",
+    location: "St. Francis Institute of Technology · 6th Floor · Room 618",
+    teamSize: "3–4 members",
+    entryFeeTeam3: "Team of 3 — ₹150",
+    entryFeeTeam4: "Team of 4 — ₹200",
   },
 
   /* --- Register --------------------------------------------------------- */
   register: {
-    status: "<- Register here",
+    status: "MISSION STATUS OPEN FOR REGISTRATION",
     url: "#",
-    ctaLabel: "Register now",
+    ctaLabel: "REGISTER NOW",
+    closing:
+      "The transmission has been recovered. The coordinates are known. The crisis isn't waiting. Gather your team. Enter Petrova.",
   },
 
   /* --- Footer ----------------------------------------------------------- */
@@ -90,18 +93,15 @@ export const EVENT = {
 export const DOSSIER_ROWS: { id: string; label: string; value: string }[] = [
   { id: "event-date", label: "Event date", value: EVENT.dossier.date },
   { id: "event-location", label: "Event location", value: EVENT.dossier.location },
-  { id: "prize-pool", label: "Prize pool", value: EVENT.dossier.prizePool },
-  { id: "tea m-format", label: "Team format", value: EVENT.dossier.teamFormat },
-  { id: "entry-fee-team-of-3", label: "Entry fee", value: EVENT.dossier.entryFee },
-  { id: "entry-fee-team-of-4", label: "Entry fee", value: EVENT.dossier.entryFeee },
+  { id: "team-size", label: "Team size", value: EVENT.dossier.teamSize },
+  { id: "entry-fee-team-of-3", label: "Entry", value: EVENT.dossier.entryFeeTeam3 },
+  { id: "entry-fee-team-of-4", label: "Entry", value: EVENT.dossier.entryFeeTeam4 },
 ];
 
 /** The facts restated above the register CTA. */
 export const REGISTER_FACTS: { label: string; value: string }[] = [
-  
   { label: "Team of 3", value: "₹150" },
   { label: "Team of 4", value: "₹200" },
-  { label: "Team format", value: "teams of 3-4" },
 ];
 
 export type SocialIcon = (typeof EVENT.socials)[number]["icon"];

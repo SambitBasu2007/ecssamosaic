@@ -1,5 +1,5 @@
 import SectionBackdrop from "@/components/SectionBackdrop/SectionBackdrop";
-import SocialIcon from "@/components/Footer/SocialIcons";
+import SocialIcon, { ContactIcon } from "@/components/Footer/Icons";
 import { ASSETS } from "@/lib/assets";
 import { EVENT } from "@/lib/event";
 
@@ -24,16 +24,23 @@ export default function Footer() {
         <div className="site-footer__grid">
           <div className="site-footer__col">
             <p className="label">Contact</p>
-            <p className="site-footer__value">
-              <span>{contact.name}</span>
-              <span className="site-footer__sep" aria-hidden="true">
-                ·
-              </span>
-              <a href={`${contact.phoneHref}${contact.phone}`}>{contact.phone}</a>
-            </p>
-            <p className="site-footer__value">
-              <a href={`${contact.emailHref}${contact.email}`}>{contact.email}</a>
-            </p>
+            {/* The association sits on its own line; each way of reaching it
+                gets its own line and its own glyph. */}
+            <p className="site-footer__value">{contact.name}</p>
+            <ul className="site-footer__links">
+              <li>
+                <a className="site-footer__link" href={`${contact.phoneHref}${contact.phone}`}>
+                  <ContactIcon name="phone" />
+                  <span>{contact.phone}</span>
+                </a>
+              </li>
+              <li>
+                <a className="site-footer__link" href={`${contact.emailHref}${contact.email}`}>
+                  <ContactIcon name="mail" />
+                  <span>{contact.email}</span>
+                </a>
+              </li>
+            </ul>
           </div>
 
           <div className="site-footer__col">

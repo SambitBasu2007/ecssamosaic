@@ -4,6 +4,19 @@
   display: flex;
   justify-content: center;
   width: 100%;
+
+  /* First in the hero's entrance order: the wrapper animates because the title
+     itself is owned by the glitch animation, which would override a transform
+     here. See HeroRegister.css for the pattern. */
+  --i: 0;
+  transition: opacity var(--dur-base) var(--ease-out-quint),
+    transform var(--dur-base) var(--ease-out-quint);
+  transition-delay: calc(var(--stagger) * var(--i)), calc(var(--stagger) * var(--i));
+}
+
+html[data-preloader="playing"] .hero-title {
+  opacity: 0;
+  transform: translateY(-0.75rem);
 }
 
 .hero-title__text {

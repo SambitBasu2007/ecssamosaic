@@ -17,6 +17,12 @@ type Props = {
  * the neutral and crimson-tinted version through `.section--crisis` — so the
  * before/after palette lives entirely in the tokens file.
  *
+ * Inside a regular content section the backdrop is a sticky, viewport-sized
+ * stage: the image holds still while that section's content scrolls over it and
+ * the next section's backdrop replaces it at the section boundary. The Footer
+ * and other excluded sections keep the plain absolute fill. See
+ * SectionBackdrop.css.
+ *
  * The image is atmospheric rather than informational, so it is hidden from
  * assistive tech.
  */

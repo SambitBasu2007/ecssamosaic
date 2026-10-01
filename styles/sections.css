@@ -20,6 +20,20 @@
   scroll-margin-top: 4.5rem;
 }
 
+/* --- Full-screen section rhythm ------------------------------------------- */
+
+/*
+ * Every regular content section reads as one full-screen scene: at least one
+ * viewport tall, and taller still when its content needs the room. `min-height`
+ * rather than a fixed height, so nothing is ever clipped.
+ *
+ * The Hero owns its shell (`.hero`, not `.section`) and the Footer keeps its
+ * content-driven height, so both are excluded on purpose.
+ */
+.section:not(.site-footer) {
+  min-height: 100svh;
+}
+
 /* A broad, blurred wash lets the outgoing and incoming scenic surfaces
    dissolve into one another instead of meeting at a hard line. */
 .section + .section::before {
@@ -64,6 +78,17 @@
   width: 100%;
   max-width: var(--content-max);
   margin-inline: auto;
+}
+
+/* Vertically balances a regular section's content inside the viewport it now
+   occupies, instead of leaving it stranded under the top padding. Section
+   stylesheets keep their own column direction and gaps; only the free space is
+   claimed here. Short sections centre, tall ones simply grow past one screen. */
+.section:not(.site-footer) > .section__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100svh - 2 * var(--section-py));
 }
 
 /* --- Type primitives ------------------------------------------------------ */
@@ -163,10 +188,10 @@
   text-transform: uppercase;
   cursor: pointer;
   transition:
-    background-color 180ms ease,
-    border-color 180ms ease,
-    color 180ms ease,
-    box-shadow 180ms ease;
+    background-color var(--dur-quick) var(--ease-out-quint),
+    border-color var(--dur-quick) var(--ease-out-quint),
+    color var(--dur-quick) var(--ease-out-quint),
+    box-shadow var(--dur-quick) var(--ease-out-quint);
 }
 
 .btn--primary {
@@ -198,7 +223,9 @@
   letter-spacing: 0.24em;
   text-transform: uppercase;
   backdrop-filter: blur(6px);
-  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
+  transition: color var(--dur-quick) var(--ease-out-quint),
+    border-color var(--dur-quick) var(--ease-out-quint),
+    background-color var(--dur-quick) var(--ease-out-quint);
 }
 
 .hud-control:hover,
@@ -215,24 +242,134 @@
  * viewport timeline, so nothing is ever hidden by JavaScript that has not
  * loaded. Browsers without `animation-timeline` simply render the content, and
  * reduced-motion users never get the animation at all.
+ *
+ * Three flavours, so not every element moves the same way — but they all travel
+ * the same direction: left to right. Nothing is revealed top to bottom, because
+ * a vertical wipe slices glyphs in half as it passes them, which reads as broken
+ * type rather than as an entrance.
+ *
+ *   .reveal          fade + a short slide in from the left, for prose blocks
+ *   .reveal--mask    clip-path sweep from the left — headings
+ *   .reveal--print   stepped sweep from the left, one child behind the next —
+ *                    lists that write themselves in (dossier rows, transmission
+ *                    log, entry fees)
  */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .reveal {
-      animation: reveal-rise linear both;
+      animation: reveal-in linear both;
       animation-timeline: view();
       animation-range: entry 12% cover 34%;
+    }
+
+    /* Declared after `.reveal` on purpose: same specificity, so source order is
+       what swaps one animation for the other. */
+    .reveal--mask {
+      animation: reveal-sweep linear both;
+      animation-timeline: view();
+      animation-range: entry 6% cover 30%;
+    }
+
+    /* The stagger is one custom property per child rather than a class per item:
+       the step index shifts the whole range, so the row above has always
+       finished before the row below starts. */
+    .reveal--print {
+      --print-step: 0;
+      animation: reveal-print steps(16, end) both;
+      animation-timeline: view();
+      animation-range: entry calc(4% + var(--print-step) * 4%) cover
+        calc(24% + var(--print-step) * 4%);
+    }
+
+    .reveal--print:nth-child(2) {
+      --print-step: 1;
+    }
+
+    .reveal--print:nth-child(3) {
+      --print-step: 2;
+    }
+
+    .reveal--print:nth-child(4) {
+      --print-step: 3;
+    }
+
+    .reveal--print:nth-child(5) {
+      --print-step: 4;
     }
   }
 }
 
-@keyframes reveal-rise {
+@keyframes reveal-in {
   from {
     opacity: 0;
-    transform: translateY(26px);
+    transform: translateX(-24px);
   }
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* A smooth left-to-right sweep. `inset(0 100% 0 0)` starts fully clipped, so
+   there is no half-drawn glyph to see at the start of the range. */
+@keyframes reveal-sweep {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* The same sweep in discrete steps — a printer head rather than a fade. */
+@keyframes reveal-print {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* --- Crisis signal noise -------------------------------------------------- */
+
+/*
+ * Post-crisis sections carry a faint monochrome grain whose strength is tied to
+ * how much of that section has been read: the transmission degrades as it
+ * plays. It is a film over the content (content sits at z-index 1, the
+ * transition band at 2), it never intercepts input, and it is opacity-only —
+ * one composited layer, no repaint — topping out at 7% so copy stays legible.
+ *
+ * A stepped flicker on top would need a second animation composed onto the same
+ * property; not worth the complexity, or the mobile paint cost, for 4%.
+ */
+.section--crisis::after {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  content: "";
+  pointer-events: none;
+  /* Desaturated fractal noise, inlined so there is no extra request. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  opacity: 0.03;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .section--crisis::after {
+      animation: noise-rise linear both;
+      animation-timeline: view();
+      animation-range: cover 15% cover 85%;
+    }
+  }
+}
+
+@keyframes noise-rise {
+  from {
+    opacity: 0.03;
+  }
+  to {
+    opacity: 0.07;
   }
 }

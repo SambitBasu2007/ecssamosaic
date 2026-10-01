@@ -5,6 +5,17 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+
+  /* Second in the hero's entrance order — see HeroRegister.css. */
+  --i: 1;
+  transition: opacity var(--dur-base) var(--ease-out-quint),
+    transform var(--dur-base) var(--ease-out-quint);
+  transition-delay: calc(var(--stagger) * var(--i)), calc(var(--stagger) * var(--i));
+}
+
+html[data-preloader="playing"] .hero-logo {
+  opacity: 0;
+  transform: translateY(0.75rem);
 }
 
 .hero-logo__mark {
