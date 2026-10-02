@@ -23,14 +23,14 @@
   border-top: 1px solid var(--hairline);
 }
 
-/* Each entry gets a full scene without pinning or scroll-linked animation. */
+/* Each entry keeps breathing room without consuming a full viewport. */
 .our-theme__stage {
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 1.4rem;
-  min-height: var(--viewport-height);
-  padding-block: clamp(3rem, 9vh, 6rem);
+  min-height: clamp(22rem, 62svh, 42rem);
+  padding-block: clamp(2rem, 6vh, 4rem);
 }
 
 /* The stamp: warm cream over the crimson backdrop, haloed in ember — the
