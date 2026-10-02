@@ -78,6 +78,8 @@
   gap: 1.4rem;
   min-height: 100svh;
   padding-block: clamp(3rem, 9vh, 6rem);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* The stamp: warm cream over the crimson backdrop, haloed in ember — the
@@ -147,7 +149,9 @@
 
 /* --- The pinned scenes ------------------------------------------------------ */
 
-@supports (animation-timeline: view()) {
+@supports (animation-timeline: view())
+  and (view-timeline-name: --ot-beat)
+  and (animation-range: entry 0% entry 100%) {
   @media (prefers-reduced-motion: no-preference) {
     /* The track: longer than the viewport, so its stage pins for a while.
        It owns the named view timeline; a non-sticky subject, so its view
@@ -174,6 +178,7 @@
       animation: ot-recede linear both;
       animation-timeline: --ot-beat;
       animation-range: cover 50% cover 66%;
+      will-change: opacity, transform;
     }
 
     /* The stamp warms in just before typing starts — late enough that the
@@ -212,6 +217,42 @@
   }
 }
 
+/* iOS Safari can support scroll-driven timelines while still stuttering when
+   several sticky layers and one animation per character update together. Keep
+   the same full-screen scenes and final visual state, but let touch devices
+   use normal scrolling and one stable painted layer per entry. */
+@supports (-webkit-touch-callout: none) {
+  @media (pointer: coarse) and (hover: none) {
+    .our-theme__entry {
+      view-timeline-name: none;
+      min-height: 100svh;
+    }
+
+    .our-theme__stage {
+      position: relative;
+      top: auto;
+      height: auto;
+      min-height: 100svh;
+      padding-block: clamp(3rem, 9vh, 6rem);
+      animation: none;
+      transform: none;
+      will-change: auto;
+    }
+
+    .our-theme__stamp,
+    .our-theme__char,
+    .our-theme__caret,
+    .our-theme__detail {
+      animation: none;
+      opacity: 1;
+    }
+
+    .our-theme__stamp {
+      text-shadow: none;
+    }
+  }
+}
+
 @keyframes ot-char {
   from {
     opacity: 0;
@@ -241,20 +282,17 @@
 @keyframes ot-recede {
   0% {
     opacity: 1;
-    scale: 1;
-    translate: 0 0;
+    transform: translate3d(0, 0, 0) scale(1);
   }
 
   62.5% {
     opacity: 0.22;
-    scale: 0.94;
-    translate: 0 0;
+    transform: translate3d(0, 0, 0) scale(0.94);
   }
 
   100% {
     opacity: 0;
-    scale: 0.9;
-    translate: 0 15%;
+    transform: translate3d(0, 15%, 0) scale(0.9);
   }
 }
 
