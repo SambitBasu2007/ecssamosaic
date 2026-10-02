@@ -237,24 +237,8 @@
 
 /* --- Section reveal ------------------------------------------------------- */
 
-/*
- * Scroll-driven, and CSS-only: the animation is tied to the element's own
- * viewport timeline, so nothing is ever hidden by JavaScript that has not
- * loaded. Browsers without `animation-timeline` simply render the content, and
- * reduced-motion users never get the animation at all.
- *
- * Three flavours, so not every element moves the same way — but they all travel
- * the same direction: left to right. Nothing is revealed top to bottom, because
- * a vertical wipe slices glyphs in half as it passes them, which reads as broken
- * type rather than as an entrance.
- *
- *   .reveal          fade + a short slide in from the left, for prose blocks
- *   .reveal--mask    clip-path sweep from the left — headings
- *   .reveal--print   stepped sweep from the left, one child behind the next —
- *                    lists that write themselves in (dossier rows, entry fees;
- *                    the transmission log now prints on Our Theme's pinned
- *                    timeline instead — see OurTheme.css)
- */
+/* Scroll-driven, and CSS-only: browsers without `animation-timeline` simply
+   render the content, and reduced-motion users never get the animation. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .reveal {
@@ -263,17 +247,12 @@
       animation-range: entry 12% cover 34%;
     }
 
-    /* Declared after `.reveal` on purpose: same specificity, so source order is
-       what swaps one animation for the other. */
     .reveal--mask {
       animation: reveal-sweep linear both;
       animation-timeline: view();
       animation-range: entry 6% cover 30%;
     }
 
-    /* The stagger is one custom property per child rather than a class per item:
-       the step index shifts the whole range, so the row above has always
-       finished before the row below starts. */
     .reveal--print {
       --print-step: 0;
       animation: reveal-print steps(16, end) both;

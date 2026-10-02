@@ -54,7 +54,6 @@
   --gutter: clamp(1.25rem, 5vw, 3.5rem);
   --viewport-height: 100svh;
   --hero-height: 108svh;
-  --theme-track-height: 150svh;
   --touch-target: 2.75rem; /* 44px minimum for anything tappable */
 
   /* --- Motion ----------------------------------------------------------- */
@@ -75,7 +74,6 @@
     :root {
       --viewport-height: 100dvh;
       --hero-height: 108dvh;
-      --theme-track-height: 150dvh;
     }
   }
 }
