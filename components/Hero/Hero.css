@@ -8,7 +8,7 @@
   justify-content: center;
   /* Viewport-height hero, biased so the title sits just above true centre. */
   min-height: 108vh;
-  min-height: 108svh;
+  min-height: var(--hero-height);
   padding: clamp(3.5rem, 9vh, 6.5rem) var(--gutter) clamp(6rem, 16vh, 10rem);
   overflow: hidden;
   background-color: var(--bg);

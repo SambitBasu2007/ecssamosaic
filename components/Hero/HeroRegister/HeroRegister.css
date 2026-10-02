@@ -48,7 +48,7 @@ html[data-preloader="playing"] .hero-register {
 @media (max-width: 48rem) {
   .hero-register {
     position: fixed;
-    top: max(0.45rem, env(safe-area-inset-top));
+    top: max(0.45rem, env(safe-area-inset-top, 0px));
     left: 50%;
     z-index: 40;
   }

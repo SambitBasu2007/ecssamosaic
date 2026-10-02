@@ -52,6 +52,9 @@
   --content-max: 1180px;
   --section-py: clamp(5rem, 12vh, 9rem);
   --gutter: clamp(1.25rem, 5vw, 3.5rem);
+  --viewport-height: 100svh;
+  --hero-height: 108svh;
+  --theme-track-height: 150svh;
   --touch-target: 2.75rem; /* 44px minimum for anything tappable */
 
   /* --- Motion ----------------------------------------------------------- */
@@ -62,6 +65,19 @@
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --stagger: 60ms; /* the beat between sibling entrances */
+}
+
+/* `dvh` follows the visible mobile viewport as browser controls expand and
+   collapse. Desktop keeps the stable viewport unit so regular resizing remains
+   calm; phones get the live height needed to avoid clipped section bottoms. */
+@media (max-width: 48rem) {
+  @supports (height: 100dvh) {
+    :root {
+      --viewport-height: 100dvh;
+      --hero-height: 108dvh;
+      --theme-track-height: 150dvh;
+    }
+  }
 }
 
 .section--crisis {

@@ -41,9 +41,9 @@
   top: 0;
   z-index: 0;
   width: calc(100% + 2 * var(--gutter));
-  height: 100svh;
+  height: var(--viewport-height);
   margin-top: calc(var(--section-py) * -1);
-  margin-bottom: calc(-100svh + var(--section-py));
+  margin-bottom: calc(var(--section-py) - var(--viewport-height));
   margin-inline: calc(var(--gutter) * -1);
   overflow: hidden;
 }
